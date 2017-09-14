@@ -1,4 +1,4 @@
 module.exports = {
-	port: process.env.PORT || 80,
+	port: process.env.PORT || 443,
 	db: process.env.MONGODB ||'mongodb://localhost:27017/talte'
 }
