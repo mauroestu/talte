@@ -1,0 +1,119 @@
+'use strict'
+
+const weather = require('../models/model');
+
+function getAllPredictions(req,res){
+	weather.find({},(err,prediccion) =>{
+		if(err) return res.status(500).send({message: 'Error al realizar la peticion.'});
+		if(!prediccion) return res.status(404).send({message: 'No hay predicciones.'});
+
+		res.jsonp(200,{prediccion});
+	});
+}
+
+function savePrediction(req,res){
+	let prediction = new weather();
+	
+	prediction.grados = req.body.grados;
+	prediction.humedad = req.body.humedad;
+	prediction.hpa = req.body.hpa;
+	prediction.luz = req.body.luz;
+	prediction.lluvia = req.body.lluvia;
+
+	prediction.save((err,prediction) => {
+		if(err) res.status(500).send({message: 'Error al guardar en la BD.'}); 
+		else console.log('Prediccion guardada'); 		
+	});
+	res.status(200).jsonp({message: 'Prediccion guardada'});
+}
+
+function obtainPrediction(req,res){
+	let predictionDate = req.params.date;
+
+	weather.find({fecha: predictionDate}, (err,prediccion) =>{
+		if(err) res.status(500).send({message: 'Error al filtrar datos.'});
+
+		let MediaDatos = { grados: 0, humedad: 0, hpa: 0, luz: 0, lluvia: 0, cantidad: 0};
+
+		prediccion.forEach((value,key) => {
+			MediaDatos.grados += value.grados;
+			MediaDatos.humedad += value.humedad;
+			MediaDatos.hpa += value.hpa;
+			MediaDatos.luz += value.luz;
+			MediaDatos.lluvia += value.lluvia;
+			MediaDatos.cantidad = (key + 1);
+		});
+
+		MediaDatos.grados /= MediaDatos.cantidad;
+		MediaDatos.humedad /= MediaDatos.cantidad;
+		MediaDatos.hpa /= MediaDatos.cantidad;
+		MediaDatos.luz /= MediaDatos.cantidad;
+		MediaDatos.lluvia /= MediaDatos.cantidad;
+
+		console.log(MediaDatos);
+
+		prediccion = execPrediction(MediaDatos);
+
+		res.status(200).send({prediccion});
+	});
+}
+
+/* >_< `
+JSON format
+{
+	temperatura: val,
+	humedad: val,
+	mensaje: val,	
+}
+*/
+function execPrediction(MediaDatos){
+	let returnPrediction = {}, message = '';
+
+	if(MediaDatos.grados < 0 && MediaDatos.hpa <= 850) 
+		message = 'Se detectan fuertes tormentas y frio extremo para hoy.';
+	else if((MediaDatos.grados >= 0 && MediaDatos.grados <= 4) && MediaDatos.hpa <= 850)
+		message = 'Se detectan lluvias fuertes y frio para hoy.';
+	else if((MediaDatos.grados > 4 && MediaDatos.grados <= 10) && MediaDatos.hpa <= 850)
+		message = 'Se detectan lluvias y frio normal para hoy.';
+	else if((MediaDatos.grados > 10 && MediaDatos.grados <= 20) && MediaDatos.hpa <= 850)
+		message = 'Se detectan lluvias fuertes para hoy.';
+	else if((MediaDatos.grados > 10 && MediaDatos.grados <= 20) && (MediaDatos.hpa > 850 && MediaDatos.hpa <= 980))
+		message = 'Se detectan posibles lluvias para hoy, el tiempo puede que mejore un poco.';
+	else if((MediaDatos.grados > 20 && MediaDatos.grados <= 25) && MediaDatos.hpa <= 850)
+		message = 'El tiempo puede que empeore con posibles lluvias fuertes';
+	else if((MediaDatos.grados > 20 && MediaDatos.grados <= 25) && (MediaDatos.hpa > 850 && MediaDatos.hpa <= 980))
+		message = 'El tiempo puede mejorar considerablemente, posibles llovisnas.';
+	else if((MediaDatos.grados > 20 && MediaDatos.grados <= 25) && (MediaDatos.hpa > 980))
+		message = 'El tiempo es estable.';
+	else if((MediaDatos.grados > 25) && (MediaDatos.hpa > 980))
+		message = 'Se detecta tiempo caluroso.';
+	else if((MediaDatos.grados < 10) && (MediaDatos.hpa > 980))
+		message = 'Se detecta tiempo frio.';
+	else
+		message = 'Tiempo muy inestable, posibles lluvias';
+
+	returnPrediction.temperatura = String(MediaDatos.grados) + ' °C';
+	returnPrediction.humedad = String(MediaDatos.humedad) + ' %';
+	returnPrediction.mensaje = message;
+
+	return returnPrediction;
+}
+
+function deletePredictions(req,res){
+	weather.find({},(err,prediccion) =>{
+		if(err) res.status(500).send({message: 'Error al borrar las predicciones.'});
+
+		weather.remove((err) => { 
+			if(err) res.status(500).send({message: 'Error al borrar las predicciones.'});
+			res.status(200).send({message: 'Las predicciones han sido eliminadas.'});
+		});
+	});
+}
+
+module.exports = {
+	getAllPredictions,
+	savePrediction,
+	obtainPrediction,
+	deletePredictions
+}
+
