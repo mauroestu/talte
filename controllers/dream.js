@@ -20,7 +20,6 @@ function saveInformation(req,res){
 	data.humedad = req.body.humedad;
 	data.ruido = req.body.ruido;
 	data.movimiento = req.body.movimiento;
-	data.fecha = req.body.fecha;
 
 	data.save((err,fact) => {
 		if(err) res.status(500).send({message: 'Error al guardar en la BD.'}); 
