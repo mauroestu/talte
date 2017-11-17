@@ -14,7 +14,8 @@ const InformationSchema = Schema({
 	humedad: {type: Number, required: true},
 	ruido: {type: Number, required: true},
 	movimiento: {type: Number, required: true},
-	fecha: { type: Number, default: fecha}
+	fecha: { type: Number, default: fecha},
+	codigo: {type: Number, default: 1}
 });
 
 module.exports = mongoose.model('information',InformationSchema);
