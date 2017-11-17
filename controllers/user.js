@@ -44,6 +44,7 @@ function saveUser(req,res){
   data.correo = req.body.correo;
   data.pass = req.body.pass;
   data.celular = req.body.celular;
+  data.codigo = 1;
 
   user.find({},(err,user)=>{
     if(err) res.status(500).jsonp({
@@ -51,8 +52,7 @@ function saveUser(req,res){
       success: false
     });
 
-    if(!data) data.codigo = 1;
-    else data.codigo = user.count + 1;
+    if(data) data.codigo = user.count + 1;
   });
 
   user.find({correo: data.correo},(err,data)=>{
@@ -81,8 +81,8 @@ function saveUser(req,res){
       });
     }
     else {
-      res.status(404).jsonp({
-        message: 'El usuario ya está registrado.',
+      res.status(500).jsonp({
+        message: "Usuario ya registrado",
         success: false
       });
     }
