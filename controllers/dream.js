@@ -29,7 +29,14 @@ function saveInformation(req,res){
 }
 
 function obtainInformation(req,res){
-		res.status(200).jsonp({message: 'Accediendo a datos.'});
+
+	let fecha = req.params.date;
+
+	information.find({fecha: fecha},(err,data)=>{
+		res.jsonp(200,{data});
+	});
+
+
 }
 
 function deleteInformation(req,res){

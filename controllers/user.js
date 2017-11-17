@@ -15,7 +15,7 @@ function obtainUser(req,res){
   let correo = req.body.correo;
   let password = req.body.password;
 
-  information.find({correo: correo, pass: password},(err,data)=>{
+  user.find({correo: correo, pass: password},(err,data)=>{
     if(err){
       res.status(500).jsonp({
         message: 'Error al realizar las peticiones a la base de datos.',
@@ -45,7 +45,7 @@ function saveUser(req,res){
   data.pass = req.body.pass;
   data.celular = req.body.celular;
 
-  information.find({},(err,information)=>{
+  user.find({},(err,information)=>{
     if(err) res.status(500).jsonp({
       message: 'Error en las peticiones.',
       success: false
@@ -55,7 +55,7 @@ function saveUser(req,res){
     else data.codigo = information.count + 1;
   });
 
-  information.find({correo: data.correo},(err,data)=>{
+  user.find({correo: data.correo},(err,data)=>{
     if(err){
       res.status(500).jsonp({
         message: 'Error al realizar las peticiones a la base de datos.',
