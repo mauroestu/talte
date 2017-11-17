@@ -2,6 +2,15 @@
 
 const user = require('../models/user');
 
+function getAllUser(req,res){
+  user.find({},(err,data) =>{
+    if(err) return res.status(500).send({message: 'Error al realizar la peticion.'});
+    if(!data) return res.status(404).send({message: 'No hay informacion guardada.'});
+
+    res.jsonp(200,{data});
+  });
+}
+
 function obtainUser(req,res){
   let correo = req.body.correo;
   let password = req.body.password;
@@ -85,5 +94,6 @@ function saveUser(req,res){
 
 module.exports = {
   saveUser,
-  obtainUser
+  obtainUser,
+  getAllUser
 };
