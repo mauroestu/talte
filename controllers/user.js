@@ -88,8 +88,6 @@ function saveUser(req,res){
     }
   });
 
-
-  res.status(200).jsonp({message: 'Usuario guardado.'});
 }
 
 module.exports = {
