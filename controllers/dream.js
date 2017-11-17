@@ -13,7 +13,7 @@ function getAllInformation(req,res){
 
 function saveInformation(req,res){
 	let data = new information();
-	
+
 	data.luz = req.body.luz;
 	data.contaminacion = req.body.contaminacion;
 	data.temperatura = req.body.temperatura;
@@ -22,21 +22,21 @@ function saveInformation(req,res){
 	data.movimiento = req.body.movimiento;
 
 	data.save((err,fact) => {
-		if(err) res.status(500).send({message: 'Error al guardar en la BD.'}); 
-		else console.log('Dato guardado.'); 		
+		if(err) res.status(500).send({message: 'Error al guardar en la BD.'});
+		else console.log('Dato guardado.');
 	});
 	res.status(200).jsonp({message: 'Dato guardado.'});
 }
 
 function obtainInformation(req,res){
-	res.status(200).jsonp({message: 'Accediendo a datos.'});
+		res.status(200).jsonp({message: 'Accediendo a datos.'});
 }
 
 function deleteInformation(req,res){
 	information.find({},(err,data) =>{
 		if(err) res.status(500).send({message: 'Error al borrar la informacion.'});
 
-		information.remove((err) => { 
+		information.remove((err) => {
 			if(err) res.status(500).send({message: 'Error al borrar la informacion.'});
 			res.status(200).send({message: 'La data ha sido eliminada.'});
 		});
@@ -49,4 +49,3 @@ module.exports = {
 	obtainInformation,
 	deleteInformation
 }
-
