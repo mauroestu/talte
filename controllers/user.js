@@ -13,28 +13,27 @@ function getAllUser(req,res){
 
 function obtainUser(req,res){
   let correo = req.body.correo;
-  let password = req.body.password;
+  let password = req.body.pass;
 
-  user.find({correo: correo, pass: password},(err,data)=>{
+  user.find({correo: correo, pass: password},(err,user)=>{
     if(err){
-      res.status(500).jsonp({
+      return res.status(500).jsonp({
         message: 'Error al realizar las peticiones a la base de datos.',
         success: false
       });
     }
 
-    if(data){
-      res.status(200).jsonp({
-        message: 'Bienvenido',
-        success: true
-      });
-    }
-    else {
-      res.status(404).jsonp({
+    if(user.length == 0){
+      return res.status(404).jsonp({
         message: 'Credenciales incorrectas.',
         success: false
       });
     }
+
+      res.status(200).jsonp({
+        message: 'bienvenido.',
+        success: true
+      });
   });
 }
 
