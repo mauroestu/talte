@@ -44,7 +44,7 @@ function saveUser(req,res){
   data.correo = req.body.correo;
   data.pass = req.body.pass;
   data.celular = req.body.celular;
-  data.codigo = 2;
+  data.codigo = 1;
 
   data.save((err,fact) => {
     if(err) res.status(500).send({message: 'Error al guardar en la BD.'});
