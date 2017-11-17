@@ -14,6 +14,6 @@ api.delete('/delete-information',InformationCtrl.deleteInformation);
 //methods user
 api.post('/save-user',UserCtrl.saveUser);
 api.post('/login-user',UserCtrl.obtainUser);
-api.get('/login-user',UserCtrl.getAllUser);
+api.get('/users',UserCtrl.getAllUser);
 
 module.exports = api;
