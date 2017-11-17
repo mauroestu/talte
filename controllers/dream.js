@@ -21,6 +21,7 @@ function saveInformation(req,res){
 	data.ruido = req.body.ruido;
 	data.movimiento = req.body.movimiento;
 
+
 	data.save((err,fact) => {
 		if(err) res.status(500).send({message: 'Error al guardar en la BD.'});
 		else console.log('Dato guardado.');

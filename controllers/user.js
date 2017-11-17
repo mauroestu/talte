@@ -44,18 +44,24 @@ function saveUser(req,res){
   data.correo = req.body.correo;
   data.pass = req.body.pass;
   data.celular = req.body.celular;
-  data.codigo = 1;
+  data.codigo = 2;
 
-  user.find({},(err,user)=>{
+  data.save((err,fact) => {
+    if(err) res.status(500).send({message: 'Error al guardar en la BD.'});
+    else console.log('Dato guardado.');
+  });
+  res.status(200).jsonp({message: 'Dato guardado.'});
+
+  /*user.find({},(err,user)=>{
     if(err) res.status(500).jsonp({
       message: 'Error en las peticiones.',
       success: false
     });
 
     if(data) data.codigo = user.count + 1;
-  });
+  });*/
 
-  user.find({correo: data.correo},(err,data)=>{
+  /*user.find({correo: data.correo},(err,data)=>{
     if(err){
       res.status(500).jsonp({
         message: 'Error al realizar las peticiones a la base de datos.',
@@ -63,7 +69,7 @@ function saveUser(req,res){
       });
     }
 
-    if(!data){
+    if(data){
       data.save((err,fact) => {
         if(err){
           res.status(500).jsonp({
@@ -86,7 +92,7 @@ function saveUser(req,res){
         success: false
       });
     }
-  });
+  });*/
 
 }
 
