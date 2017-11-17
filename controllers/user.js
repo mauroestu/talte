@@ -45,14 +45,14 @@ function saveUser(req,res){
   data.pass = req.body.pass;
   data.celular = req.body.celular;
 
-  user.find({},(err,information)=>{
+  user.find({},(err,user)=>{
     if(err) res.status(500).jsonp({
       message: 'Error en las peticiones.',
       success: false
     });
 
     if(!data) data.codigo = 1;
-    else data.codigo = information.count + 1;
+    else data.codigo = user.count + 1;
   });
 
   user.find({correo: data.correo},(err,data)=>{
