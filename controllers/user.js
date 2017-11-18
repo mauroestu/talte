@@ -46,7 +46,7 @@ function saveUser(req,res){
   data.codigo = 2;
 
   data.save((err,fact) => {
-    if(err) res.status(500).send({message: 'Error al guardar en la BD.'});
+    if(err) res.status(500).jsonp({message: 'Error al guardar en la BD.'});
     else console.log('Dato guardado.');
   });
   res.status(200).jsonp({message: 'Dato guardado.'});
