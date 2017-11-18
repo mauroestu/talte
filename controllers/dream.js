@@ -41,7 +41,13 @@ function tips(req,res){
 function execTips(MediaData) {
 	let returnTip = {}; messages = '';
 
+	if(between(MediaData.luz,0,50))
+	{}
+	else if(between(MediaData.luz,51,1024))
+	{}
 
+
+	returnTip.message = messages;
 	return returnTip;
 }
 
@@ -76,13 +82,13 @@ function execReport(MediaData) {
 	let returnTip = {}; messages = '';
 
 	if(MediaData.ruido <= 200 && MediaData.movimiento <= 0.2)
-		message. = 'Su preocupación es muy baja, fue una gran noche de sueño.';
+		message = 'Su preocupación es muy baja, fue una gran noche de sueño.';
 	else if(between(MediaData.ruido,201,500) && between(MediaData.movimiento,0.21,0.5))
-		message. = 'Debería considerar no estresarse mucho para una mejor calidad de sueño al dormir.';
+		message= 'Debería considerar no estresarse mucho para una mejor calidad de sueño al dormir.';
 	else if(between(MediaData.ruido,501,800) && between(MediaData.movimiento,0.51,0.8))
-		message. = 'Su calidad de sueño está siendo afectada seriamente por su día a día, se aconseja evitar la preocupación excesiva para que su salud no se vea afectada.';
+		message = 'Su calidad de sueño está siendo afectada seriamente por su día a día, se aconseja evitar la preocupación excesiva para que su salud no se vea afectada.';
 	else if(between(MediaData.ruido,801,1024) && between(MediaData.movimiento,0.81,1))
-		message. = 'Su calidad de sueño se ve seriamente afectada, favor visitar a un médico para corregir serios niveles de estrés o preocupación.';
+		message = 'Su calidad de sueño se ve seriamente afectada, favor visitar a un médico para corregir serios niveles de estrés o preocupación.';
 
 	returnTip.message = messages;
 
@@ -134,5 +140,7 @@ module.exports = {
 	getAllInformation,
 	saveInformation,
 	obtainInformation,
-	deleteInformation
+	deleteInformation,
+	tips,
+	report
 }
