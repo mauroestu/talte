@@ -41,9 +41,9 @@ function tips(req,res){
 function execTips(MediaData) {
 	let returnTip = {}, messages = '';
 
-	if(between(MediaData.luz,0,50))
+	if(between(MediaData.luz,0,10))
 	{ messages += '* La luz está en el grado optimo para dormir bien. \n'; }
-	else if(between(MediaData.luz,51,1024))
+	else if(between(MediaData.luz,11,1024))
 	{ messages += '* La luz es muy alta y no ayuda a tener un sueño óptimo, bajé el nivel de luz en su ambiente. \n'; }
 
 	if(between(MediaData.contaminacion,0,55))
