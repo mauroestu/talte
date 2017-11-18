@@ -49,27 +49,27 @@ function execTips(MediaData) {
 	if(between(MediaData.contaminacion,0,55))
 	{ messages += '* La calidad del aire es bastante adecuada. \n'; }
 	else if(between(MediaData.contaminacion,56,65))
-	{ messages += '*  \n'; }
+	{ messages += '* La calidad del aire es normal, pero se mantiene para una calidad de sueño aceptable. \n'; }
 	else if(between(MediaData.contaminacion,74,400))
-	{ messages += '* \n'; }
+	{ messages += '* La calidad del aire contiene mucho dióxido de carbono, se recomienda limpiar su ambiente.\n'; }
 	else if(between(MediaData.contaminacion,401,1024))
-	{ messages += '* \n'; }
+	{ messages += '* La contaminación en su cuarto es exageradamente grande, abandone ese lugar.\n'; }
 
 	if(between(MediaData.temperatura,0,10))
 	{ messages += '* El ambiente es demasiado frío, se aconseja subir la temperatura de su ambiente para evitar frío. \n'; }
 	else if(between(MediaData.temperatura,10,26))
-	{ messages += '* \n'; }
+	{ messages += '* La temperatura del ambiente es óptima para una buena calidad de sueño. \n'; }
 	else if(between(MediaData.temperatura,26,1024))
-	{ messages += '* \n'; }
+	{ messages += '* La temperatura es demasiado alta, se aconseja bajar la temperatura de su ambiente para evitar insomnio por calor. \n'; }
 
 	if(between(MediaData.humedad,0,49))
-	{ messages += '* \n'; }
+	{ messages += '* El ambiente es demasiado seco para el sistema respiratorio, se recomiendo el uso de humificadores. \n'; }
 	else if(between(MediaData.humedad,50,60))
-	{ messages += '* \n'; }
+	{ messages += '* La humedad en el ambiente es bastante óptima para una buena calidad de sueño. \n'; }
 	else if(between(MediaData.humedad,60,1024))
-	{ messages += '* \n'; }
+	{ messages += '* La humedad es demasiado alta en su ambiente, poniendo en riesgo su salud del sistema respiratorio.\n'; }
 
-	//returnTip.message = messages;
+	returnTip.message = messages;
 	return returnTip;
 }
 
