@@ -39,15 +39,37 @@ function tips(req,res){
 }
 
 function execTips(MediaData) {
-	let returnTip = {}; messages = '';
+	let returnTip = {}, messages = '';
 
 	if(between(MediaData.luz,0,50))
-	{}
+	{ messages += '* La luz está en el grado optimo para dormir bien. \n'; }
 	else if(between(MediaData.luz,51,1024))
-	{}
+	{ messages += '* La luz es muy alta y no ayuda a tener un sueño óptimo, bajé el nivel de luz en su ambiente. \n'; }
 
+	if(between(MediaData.contaminacion,0,55))
+	{ messages += '* La calidad del aire es bastante adecuada. \n'; }
+	else if(between(MediaData.contaminacion,56,65))
+	{ messages += '*  \n'; }
+	else if(between(MediaData.contaminacion,74,400))
+	{ messages += '* \n'; }
+	else if(between(MediaData.contaminacion,401,1024))
+	{ messages += '* \n'; }
 
-	returnTip.message = messages;
+	if(between(MediaData.temperatura,0,10))
+	{ messages += '* El ambiente es demasiado frío, se aconseja subir la temperatura de su ambiente para evitar frío. \n'; }
+	else if(between(MediaData.temperatura,10,26))
+	{ messages += '* \n'; }
+	else if(between(MediaData.temperatura,26,1024))
+	{ messages += '* \n'; }
+
+	if(between(MediaData.humedad,0,49))
+	{ messages += '* \n'; }
+	else if(between(MediaData.humedad,50,60))
+	{ messages += '* \n'; }
+	else if(between(MediaData.humedad,60,1024))
+	{ messages += '* \n'; }
+
+	//returnTip.message = messages;
 	return returnTip;
 }
 
@@ -79,7 +101,7 @@ function between(x, min, max) {
 }
 
 function execReport(MediaData) {
-	let returnTip = {}; messages = '';
+	let returnTip = {}, message = '';
 
 	if(MediaData.ruido <= 200 && MediaData.movimiento <= 0.2)
 		message = 'Su preocupación es muy baja, fue una gran noche de sueño.';
@@ -90,7 +112,7 @@ function execReport(MediaData) {
 	else if(between(MediaData.ruido,801,1024) && between(MediaData.movimiento,0.81,1))
 		message = 'Su calidad de sueño se ve seriamente afectada, favor visitar a un médico para corregir serios niveles de estrés o preocupación.';
 
-	returnTip.message = messages;
+	returnTip.message = message;
 
 	return returnTip;
 }
