@@ -103,9 +103,9 @@ function between(x, min, max) {
 function execReport(MediaData) {
 	let returnTip = {}, message = '';
 
-	if(MediaData.ruido <= 200 || MediaData.movimiento <= 0.2)
+	if(MediaData.ruido <= 50 || MediaData.movimiento <= 0.2)
 		message = 'Su preocupación es muy baja, fue una gran noche de sueño.';
-	else if(between(MediaData.ruido,201,500) || between(MediaData.movimiento,0.21,0.5))
+	else if(between(MediaData.ruido,51,500) || between(MediaData.movimiento,0.21,0.5))
 		message= 'Debería considerar no estresarse mucho para una mejor calidad de sueño al dormir.';
 	else if(between(MediaData.ruido,501,800) || between(MediaData.movimiento,0.51,0.8))
 		message = 'Su calidad de sueño está siendo afectada seriamente por su día a día, se aconseja evitar la preocupación excesiva para que su salud no se vea afectada.';
