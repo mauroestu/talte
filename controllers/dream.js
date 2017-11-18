@@ -11,6 +11,85 @@ function getAllInformation(req,res){
 	});
 }
 
+function tips(req,res){
+	let fecha = req.params.date;
+
+	information.find({fecha: fecha},(err,data)=>{
+		if(err) res.status(500).jsonp({message: 'Error al filtrar datos.'});
+
+		let MediaData = {luz:0, contaminacion:0, temperatura:0, humedad:0, cantidad:0};
+
+		data.forEach((value,key) => {
+			MediaData.luz += value.luz;
+			MediaData.contaminacion += value.contaminacion;
+			MediaData.temperatura += value.temperatura;
+			MediaData.humedad += value.humedad;
+			MediaData.cantidad = (key + 1);
+		});
+
+		MediaData.luz /= MediaData.cantidad;
+		MediaData.contaminacion /= MediaData.cantidad;
+		MediaData.temperatura /= MediaData.cantidad;
+		MediaData.humedad /= MediaData.cantidad;
+
+		data = execTips(MediaData);
+
+		res.status(200).jsonp({data});
+	});
+}
+
+function execTips(MediaData) {
+	let returnTip = {}; messages = '';
+
+
+	return returnTip;
+}
+
+function report(req,res){
+	let fecha = req.params.date;
+
+	information.find({fecha: fecha},(err,data)=>{
+		if(err) res.status(500).jsonp({message: 'Error al filtrar datos.'});
+
+		let MediaData = {ruido: 0, movimiento: 0, cantidad: 0};
+
+		data.forEach((value,key) => {
+			MediaData.ruido += value.luz;
+			MediaData.movimiento += value.contaminacion;
+			MediaData.cantidad = (key + 1);
+		});
+
+		MediaData.ruido /= MediaData.cantidad;
+		MediaData.movimiento /= MediaData.cantidad;
+
+		data = execReport(MediaData);
+
+		res.status(200).jsonp({data});
+	});
+}
+
+function between(x, min, max) {
+  return x >= min && x <= max;
+}
+
+function execReport(MediaData) {
+	let returnTip = {}; messages = '';
+
+	if(MediaData.ruido <= 200 && MediaData.movimiento <= 0.2)
+		message. = 'Su preocupación es muy baja, fue una gran noche de sueño.';
+	else if(between(MediaData.ruido,201,500) && between(MediaData.movimiento,0.21,0.5))
+		message. = 'Debería considerar no estresarse mucho para una mejor calidad de sueño al dormir.';
+	else if(between(MediaData.ruido,501,800) && between(MediaData.movimiento,0.51,0.8))
+		message. = 'Su calidad de sueño está siendo afectada seriamente por su día a día, se aconseja evitar la preocupación excesiva para que su salud no se vea afectada.';
+	else if(between(MediaData.ruido,801,1024) && between(MediaData.movimiento,0.81,1))
+		message. = 'Su calidad de sueño se ve seriamente afectada, favor visitar a un médico para corregir serios niveles de estrés o preocupación.';
+
+	returnTip.message = messages;
+
+	return returnTip;
+}
+
+
 function saveInformation(req,res){
 	let data = new information();
 
