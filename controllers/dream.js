@@ -15,7 +15,7 @@ function tips(req,res){
 	let fecha = req.params.date;
 
 	information.find({fecha: fecha},(err,data)=>{
-		if(err) res.status(500).jsonp({message: 'Error al filtrar datos.'});
+		if(err) res.status(500).jsonp({message: 'Error al filtrar datitos.'});
 
 		let MediaData = {luz:0, contaminacion:0, temperatura:0, humedad:0, cantidad:0};
 
